@@ -15,6 +15,14 @@
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.SET_ALARM" />
                 <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <action android:name="android.intent.action.SENDTO" />
+                <data android:scheme="mailto" />
+                <category android:name="android.intent.category.DEFAULT" />
+
             </intent-filter>
         </activity>
     </application>

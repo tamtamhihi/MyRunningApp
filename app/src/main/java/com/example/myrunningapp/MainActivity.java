@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.AlarmClock;
 import android.view.View;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         reminderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Dialog dialog = new Dialog(MainActivity.this, android.R.style.Theme_Material_Dialog_NoActionBar);
+                final Dialog dialog = new Dialog(MainActivity.this, android.R.style.Theme_Material_Light_Dialog_NoActionBar);
                 dialog.setContentView(R.layout.reminder_dialog);
                 dialog.setCancelable(false);
 
@@ -55,6 +56,48 @@ public class MainActivity extends AppCompatActivity {
                                 .putExtra(AlarmClock.EXTRA_MESSAGE, myMessage)
                                 .putExtra(AlarmClock.EXTRA_HOUR, hour)
                                 .putExtra(AlarmClock.EXTRA_MINUTES, minute);
+                        if (intent.resolveActivity(getPackageManager()) != null) {
+                            startActivity(intent);
+                        }
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
+
+        FloatingActionButton contactButton = findViewById(R.id.contact);
+        contactButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Dialog dialog = new Dialog(MainActivity.this, android.R.style.Theme_Material_Light_DialogWhenLarge_NoActionBar);
+                dialog.setContentView(R.layout.contact_dialog);
+                dialog.setCancelable(false);
+
+                final EditText emailstr = dialog.findViewById(R.id.editEmail);
+                final EditText subjectstr = dialog.findViewById(R.id.editSubject);
+                final EditText contentstr = dialog.findViewById(R.id.editContent);
+                Button cancelBtn = dialog.findViewById(R.id.btnCancel);
+                Button okBtn = dialog.findViewById(R.id.btnOK);
+
+                cancelBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                okBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String email = emailstr.getText().toString();
+                        String subject = subjectstr.getText().toString();
+                        String content = contentstr.getText().toString();
+
+                        Intent intent = new Intent(Intent.ACTION_SENDTO)
+                                .setData(Uri.parse("mailto:"))
+                                .putExtra(Intent.EXTRA_EMAIL, email)
+                                .putExtra(Intent.EXTRA_SUBJECT, subject)
+                                .putExtra(Intent.EXTRA_TEXT, content);
                         if (intent.resolveActivity(getPackageManager()) != null) {
                             startActivity(intent);
                         }

@@ -76,6 +76,12 @@
         android:layout_gravity="center"
         android:src="@drawable/reminder" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/contact"
+        android:layout_gravity="center"
+        android:src="@drawable/contact"/>
 
 
 </LinearLayout>
