@@ -66,5 +66,15 @@
             android:text="12"/>
     </LinearLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/reminder"
+        android:layout_margin="8dp"
+        android:layout_gravity="center"
+        android:src="@drawable/reminder"
+        />
+
+
 
 </LinearLayout>
