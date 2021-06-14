@@ -1,7 +1,9 @@
 package com.example.myrunningapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -16,6 +18,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -30,87 +34,30 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton reminderButton = findViewById(R.id.reminder);
-        reminderButton.setOnClickListener(new View.OnClickListener() {
+        MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager(), getLifecycle());
+        ViewPager2 viewPager = findViewById(R.id.viewpager);
+        viewPager.setAdapter(adapter);
+
+        TabLayout tabLayout = findViewById(R.id.tablayout);
+        new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
-            public void onClick(View view) {
-                final Dialog dialog = new Dialog(MainActivity.this, android.R.style.Theme_Material_Light_Dialog_NoActionBar);
-                dialog.setContentView(R.layout.reminder_dialog);
-                dialog.setCancelable(false);
-
-                final EditText message = dialog.findViewById(R.id.message);
-                final TimePicker timePicker = dialog.findViewById(R.id.time_picker);
-                Button cancelButton = dialog.findViewById(R.id.cancel_button);
-                Button okButton = dialog.findViewById(R.id.ok_button);
-                cancelButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                okButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int minute = timePicker.getMinute();
-                        int hour = timePicker.getHour();
-                        String myMessage = message.getText().toString();
-                        if (myMessage.trim().isEmpty())
-                            myMessage = "My Workout";
-
-                        Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM)
-                                .putExtra(AlarmClock.EXTRA_MESSAGE, myMessage)
-                                .putExtra(AlarmClock.EXTRA_HOUR, hour)
-                                .putExtra(AlarmClock.EXTRA_MINUTES, minute);
-                        if (intent.resolveActivity(getPackageManager()) != null) {
-                            startActivity(intent);
-                        }
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show();
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                switch (position) {
+                    case 0:
+                        tab.setText("PROGRESS");
+                        break;
+                    case 1:
+                        tab.setText("ACTIVITIES");
+                        break;
+                    case 2:
+                        tab.setText("PROFILE");
+                        break;
+                    default:
+                }
             }
-        });
+        }).attach();
 
-        FloatingActionButton contactButton = findViewById(R.id.contact);
-        contactButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final Dialog dialog = new Dialog(MainActivity.this, android.R.style.Theme_Material_Light_DialogWhenLarge_NoActionBar);
-                dialog.setContentView(R.layout.contact_dialog);
-                dialog.setCancelable(false);
-
-                final EditText emailstr = dialog.findViewById(R.id.editEmail);
-                final EditText subjectstr = dialog.findViewById(R.id.editSubject);
-                final EditText contentstr = dialog.findViewById(R.id.editContent);
-                Button cancelBtn = dialog.findViewById(R.id.btnCancel);
-                Button okBtn = dialog.findViewById(R.id.btnOK);
-
-                cancelBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-                okBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        String email = emailstr.getText().toString();
-                        String subject = subjectstr.getText().toString();
-                        String content = contentstr.getText().toString();
-
-                        Intent intent = new Intent(Intent.ACTION_SENDTO)
-                                .setData(Uri.parse("mailto:"))
-                                .putExtra(Intent.EXTRA_EMAIL, email)
-                                .putExtra(Intent.EXTRA_SUBJECT, subject)
-                                .putExtra(Intent.EXTRA_TEXT, content);
-                        if (intent.resolveActivity(getPackageManager()) != null) {
-                            startActivity(intent);
-                        }
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show();
-            }
-        });
     }
+
+
 }
