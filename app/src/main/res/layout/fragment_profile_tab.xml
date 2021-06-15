@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textAppearance="@style/Title"
-                android:text="Băng Tâm N. N." />
+                android:text="Tam Nguyen" />
         </LinearLayout>
 
         <LinearLayout

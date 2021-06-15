@@ -17,8 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -37,18 +35,21 @@ public class ProfileTabFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.profile_tab_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_profile_tab, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         renderButtons();
-        RecyclerView recyclerView = view.findViewById(R.id.activities);
+        renderRecyclerView();
+    }
+
+    private void renderRecyclerView() {
+        RecyclerView recyclerView = getView().findViewById(R.id.activities);
         double[] distance = {3.75, 4.00, 1.91, 2.08, 3.00};
-        double[] pace = {7.34, 8.03, 8.07, 7.58, 7.55};
         int[] time = {1705, 1925, 934, 996, 1426};
-        RunningActivityAdapter adapter = new RunningActivityAdapter(distance, pace, time, getContext());
+        RunningActivityAdapter adapter = new RunningActivityAdapter(distance, time, getContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }

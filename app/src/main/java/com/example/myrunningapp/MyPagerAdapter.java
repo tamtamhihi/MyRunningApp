@@ -16,7 +16,16 @@ public class MyPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        return new ProfileTabFragment();
+        switch (position) {
+            case 0:
+                return new ProgressTabFragment();
+            case 1:
+                return new ActivityTabFragment();
+            case 2:
+                return new ProfileTabFragment();
+            default:
+                return new ProfileTabFragment();
+        }
     }
 
     @Override

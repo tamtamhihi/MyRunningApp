@@ -11,34 +11,42 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class RunningActivityAdapter extends RecyclerView.Adapter<RunningActivityAdapter.ViewHolder> {
-    private int[]  time;
-    private double[] distance, pace;
+    private int[] time;
+    private double[] distance;
     private Context context;
-    public RunningActivityAdapter(double[] distance, double[] pace, int[] time, Context context){
-        this.distance=distance;
-        this.pace = pace;
+
+    public RunningActivityAdapter(double[] distance, int[] time, Context context) {
+        this.distance = distance;
         this.time = time;
         this.context = context;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.running_activity_items_layout, parent, false);
-        return new ViewHolder((view));
+        return new ViewHolder(view);
     }
 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.distanceView.setText(Double.toString(distance[position]) + " km");
-        holder.paceView.setText(Double.toString(pace[position]) + " /km");
-        int min = time[position]/60;
+        holder.distanceView.setText(distance[position] + " km");
+
+        // Calculate pace
+        int pace = (int)((double)time[position] / distance[position]);
+        int paceMin = pace / 60;
+        int paceSec = pace % 60;
+        holder.paceView.setText(paceMin + ":" + paceSec + " /km");
+
+        // Calculate time
+        int min = time[position] / 60;
         int sec = time[position] % 60;
-        holder.timeView.setText(Integer.toString(min) + "m " + Integer.toString(sec) + "s");
-        int resID = context.getResources().getIdentifier("p" + Integer.toString(position+1) + ".jpg",
-                "drawable", context.getPackageName());
-        holder.imageView.setImageResource(resID);
+        holder.timeView.setText(min + "m " + sec + "s");
+
+        // Set image
+        holder.imageView.setImageResource(R.drawable.p1 + position);
     }
 
     @Override
@@ -49,9 +57,10 @@ public class RunningActivityAdapter extends RecyclerView.Adapter<RunningActivity
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView distanceView, paceView, timeView;
         public ImageView imageView;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            distanceView= itemView.findViewById(R.id.distanceID);
+            distanceView = itemView.findViewById(R.id.distanceID);
             paceView = itemView.findViewById(R.id.paceID);
             timeView = itemView.findViewById(R.id.timeID);
             imageView = itemView.findViewById(R.id.p1ID);
