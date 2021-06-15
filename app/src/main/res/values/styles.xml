@@ -23,8 +23,16 @@
         <item name="fontFamily">@font/text</item>
         <item name="android:textSize">14sp</item>
     </style>
+    <style name="TimeAddress">
+        <item name="fontFamily">@font/text</item>
+        <item name="android:textColor">#808080</item>
+        <item name="android:textSize">11sp</item>
+    </style>
     <style name="OrangeText" parent="NormalText">
         <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+    <style name="BlackText" parent="NormalText">
+        <item name="android:textColor">@color/black</item>
     </style>
     <style name="Toolbar">
         <item name="fontFamily">@font/bold</item>

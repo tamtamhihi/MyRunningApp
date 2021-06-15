@@ -38,25 +38,23 @@ public class MainActivity extends AppCompatActivity {
         ViewPager2 viewPager = findViewById(R.id.viewpager);
         viewPager.setAdapter(adapter);
 
-        TabLayout tabLayout = findViewById(R.id.tablayout);
+        final TabLayout tabLayout = findViewById(R.id.tablayout);
         new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                switch (position) {
+                switch(position){
                     case 0:
                         tab.setText("PROGRESS");
                         break;
                     case 1:
-                        tab.setText("ACTIVITIES");
+                        tab.setText("ACTIVITY");
                         break;
                     case 2:
                         tab.setText("PROFILE");
                         break;
-                    default:
                 }
             }
         }).attach();
-
     }
 
 

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="15dp"
+            android:src="@drawable/ava"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tam Nguyen"
+            android:layout_marginTop= "25dp"
+            android:textAppearance="@style/BlackText"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Yesterday at 4:10 PM . Nguyen Cu Trinh Ward, District 1"
+            android:textAppearance="@style/TimeAddress"/>
+        </LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Afternoon Run"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:textAppearance="@style/Title"/>
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:rowCount="2"
+        android:orientation="horizontal"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="120dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Distance"
+            android:layout_columnWeight="1"
+            android:textAppearance="@style/TimeAddress"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pace"
+            android:layout_columnWeight="1"
+            android:textAppearance="@style/TimeAddress"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time"
+            android:layout_columnWeight="1"
+            android:textAppearance="@style/TimeAddress"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3.75 km"
+            android:layout_columnWeight="1"
+            android:id="@+id/distanceID"
+            android:textAppearance="@style/BlackText"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="7:34 /km"
+            android:id="@+id/paceID"
+            android:layout_columnWeight="1"
+            android:textAppearance="@style/BlackText"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="28m 25s"
+            android:id="@+id/timeID"
+            android:layout_columnWeight="1"
+            android:textAppearance="@style/BlackText"/>
+    </GridLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/p1"
+        android:id="@+id/p1ID"/>
+
+
+</LinearLayout>
