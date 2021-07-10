@@ -20,7 +20,7 @@ public class MyPagerAdapter extends FragmentStateAdapter {
             case 0:
                 return new ProgressTabFragment();
             case 1:
-                return new ActivityTabFragment();
+                return new ChallengesTabFragment();
             case 2:
                 return new ProfileTabFragment();
             default:

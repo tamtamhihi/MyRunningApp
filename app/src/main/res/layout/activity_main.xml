@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".MainActivity">
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
@@ -12,17 +11,28 @@
         android:id="@+id/toolbar"
         android:background="@color/colorPrimary"
         app:title="My Strava"
-        app:titleTextAppearance="@style/Toolbar"/>
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tablayout"
+        app:titleTextAppearance="@style/Toolbar"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabTextAppearance="@style/Tab"
-        android:background="@color/colorPrimary"
-        app:tabGravity="fill"
-        app:tabIndicatorColor="@color/white"/>
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewpager"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_alignTop="@id/toolbar"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"/>
-</LinearLayout>
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/nav_menu"
+        app:backgroundTint="@color/colorPrimary"
+        android:alpha="100"
+        android:foregroundTint="@color/white"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
+        android:backgroundTint="@color/white"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

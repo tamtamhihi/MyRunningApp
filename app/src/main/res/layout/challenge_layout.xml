@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <ImageView
+        android:id="@+id/challenge_img"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:src="@drawable/step_challenge"
+        android:scaleType="centerCrop"
+        android:padding="8dp"/>
+
+    <TextView
+        android:id="@+id/challenge_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My Running Challenge"
+        style="@style/Title"
+        android:paddingStart="15dp"/>
+    <TextView
+        android:id="@+id/challenge_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Distance challenge"
+        android:paddingStart="15dp"/>
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:progress="13"
+        android:focusable="false"
+        android:clickable="false"
+        android:pointerIcon="crosshair"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="textEnd"
+        android:text="12.5/100km"
+        android:paddingEnd="15dp"
+        style="@style/BlackText"/>
+
+</LinearLayout>

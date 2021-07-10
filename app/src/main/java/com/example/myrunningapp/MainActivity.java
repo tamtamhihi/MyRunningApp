@@ -3,20 +3,25 @@ package com.example.myrunningapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.AlarmClock;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -26,6 +31,7 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,28 +40,37 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager(), getLifecycle());
-        ViewPager2 viewPager = findViewById(R.id.viewpager);
-        viewPager.setAdapter(adapter);
+        final ProgressTabFragment progressFragment = new ProgressTabFragment();
+        final ActivityTabFragment activityFragment = new ActivityTabFragment();
+        final MeBottomTabFragment meFragment = new MeBottomTabFragment();
 
-        final TabLayout tabLayout = findViewById(R.id.tablayout);
-        new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
+        setCurrentFragment(progressFragment);
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                switch(position){
-                    case 0:
-                        tab.setText("PROGRESS");
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.home:
+                        setCurrentFragment(progressFragment);
                         break;
-                    case 1:
-                        tab.setText("ACTIVITY");
+                    case R.id.record:
+                        setCurrentFragment(activityFragment);
                         break;
-                    case 2:
-                        tab.setText("PROFILE");
+                    case R.id.me:
+                        setCurrentFragment(meFragment);
+                        break;
+                    default:
                         break;
                 }
+                return true;
             }
-        }).attach();
+        });
+
+
     }
-
-
+    private void setCurrentFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+    }
 }
