@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -17,6 +17,10 @@
         <item name="imageButtonStyle">@style/Widget.AppCompat.Button.Borderless</item>
     </style>
     
+    <style name="BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="fontFamily">@font/text</item>
+        <item name="android:fontFamily">@font/text</item>
+    </style>
     
 
     <style name="BoldText">

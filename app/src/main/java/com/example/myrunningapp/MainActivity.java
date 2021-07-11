@@ -4,30 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager2.widget.ViewPager2;
 
-import android.app.Dialog;
-import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.AlarmClock;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TimePicker;
-import android.widget.Toast;
 
+import com.example.myrunningapp.metab.MeBottomTabFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
-
-import java.util.Calendar;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,11 +19,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
+        // TODO: 3 tabs: HOME TAB (display all activities), RECORD TAB (record), ME TAB (profile)
         final ProgressTabFragment progressFragment = new ProgressTabFragment();
-        final ActivityTabFragment activityFragment = new ActivityTabFragment();
+        final ProgressTabFragment activityFragment = new ProgressTabFragment();
         final MeBottomTabFragment meFragment = new MeBottomTabFragment();
 
         setCurrentFragment(progressFragment);

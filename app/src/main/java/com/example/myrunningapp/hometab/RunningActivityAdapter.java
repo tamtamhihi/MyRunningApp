@@ -1,4 +1,4 @@
-package com.example.myrunningapp;
+package com.example.myrunningapp.hometab;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.myrunningapp.R;
 
 public class RunningActivityAdapter extends RecyclerView.Adapter<RunningActivityAdapter.ViewHolder> {
     private int[] time;

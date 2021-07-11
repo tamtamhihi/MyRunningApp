@@ -5,8 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".MeBottomTabFragment"
+    tools:context=".metab.MeBottomTabFragment"
     android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="My Strava"
+        app:titleTextAppearance="@style/Toolbar" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tablayout"
@@ -15,7 +24,8 @@
         app:tabTextAppearance="@style/Tab"
         android:background="@color/colorPrimary"
         app:tabGravity="fill"
-        app:tabIndicatorColor="@color/white"/>
+        app:tabIndicatorColor="@color/white"
+        app:tabSelectedTextColor="@color/white"/>
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager"
         android:layout_width="match_parent"

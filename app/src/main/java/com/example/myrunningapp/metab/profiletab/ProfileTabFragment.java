@@ -1,4 +1,4 @@
-package com.example.myrunningapp;
+package com.example.myrunningapp.metab.profiletab;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
+import com.example.myrunningapp.R;
+import com.example.myrunningapp.hometab.RunningActivityAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ProfileTabFragment extends Fragment {
@@ -30,6 +32,7 @@ public class ProfileTabFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override

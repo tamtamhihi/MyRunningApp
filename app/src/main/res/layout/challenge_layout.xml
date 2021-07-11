@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    >
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:paddingBottom="8dp">
 
     <ImageView
         android:id="@+id/challenge_img"
@@ -27,21 +31,46 @@
         android:text="Distance challenge"
         android:paddingStart="15dp"/>
 
-    <SeekBar
+    <ProgressBar
+        android:id="@+id/completeness_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:progress="13"
-        android:focusable="false"
-        android:clickable="false"
-        android:pointerIcon="crosshair"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
         android:layout_marginTop="8dp"/>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp">
+        <TextView
+            android:id="@+id/distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12.5 / 100 km"
+            android:layout_alignParentStart="true"
+            style="@style/BlackText"/>
+        <TextView
+            android:id="@+id/percentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12.5%"
+            android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
+
     <TextView
+        android:id="@+id/deadline"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="textEnd"
-        android:text="12.5/100km"
+        android:text="Ends in 2 days"
         android:paddingEnd="15dp"
-        style="@style/BlackText"/>
+        android:paddingTop="4dp"
+        style="@style/OrangeText"/>
+
+
 
 </LinearLayout>
