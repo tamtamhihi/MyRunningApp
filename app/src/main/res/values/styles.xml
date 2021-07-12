@@ -21,7 +21,19 @@
         <item name="fontFamily">@font/text</item>
         <item name="android:fontFamily">@font/text</item>
     </style>
-    
+
+    <style name="Base.Widget.AppCompat.SeekBar.Discrete.Me" parent="Base.Widget.AppCompat.SeekBar.Discrete">
+        <item name="android:progressTint">@color/colorPrimary</item>
+        <item name="android:thumbTint">@color/colorPrimary</item>
+        <item name="tickMarkTint">@color/colorAccent</item>
+    </style>
+
+    <style name="ThemeOverlay.MaterialComponents.MaterialAlertDialog.Me" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="fontFamily">@font/bold</item>
+        <item name="android:fontFamily">@font/bold</item>
+        <item name="font">@font/bold</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/NormalText</item>
+    </style>
 
     <style name="BoldText">
         <item name="fontFamily">@font/bold</item>
@@ -33,6 +45,7 @@
         <item name="android:textStyle">bold</item>
     </style>
     <style name="NormalText">
+        <item name="android:fontFamily">@font/text</item>
         <item name="fontFamily">@font/text</item>
         <item name="android:textSize">14sp</item>
     </style>
@@ -42,6 +55,7 @@
         <item name="android:textSize">11sp</item>
     </style>
     <style name="OrangeText" parent="NormalText">
+        <item name="titleTextColor">@color/colorPrimary</item>
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
     <style name="BlackText" parent="NormalText">

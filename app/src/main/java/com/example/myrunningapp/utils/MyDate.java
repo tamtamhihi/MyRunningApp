@@ -6,9 +6,10 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 
 import java.io.Console;
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class MyDate {
+public class MyDate implements Serializable {
     public int day, month, year;
     static int[] days = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
@@ -19,17 +20,12 @@ public class MyDate {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public int daysUntilNow() {
+    public int daysLeftFromNow() {
         LocalDate today = LocalDate.now();
-        Log.d("HELLO", today.toString());
         int cday = today.getDayOfMonth(), cmonth = today.getMonthValue(), cyear = today.getYear();
-        Log.d("HELLOOOOOOOOOOO", Integer.toString(cday) + "/" + Integer.toString(cmonth) + "/" + Integer.toString(cyear));
-        Log.d("DIENNNNNNNN", Integer.toString(today.getDayOfYear()));
 
         if (cyear == year) {
-            Log.d("TAMMMMMMMMMM", Integer.toString(getDayOfYear()));
-            Log.d("TIANXIN", Integer.toString(getDayOfYear() - today.getDayOfYear()));
-            return getDayOfYear() - today.getDayOfYear();
+            return getDayOfYear() - today.getDayOfYear() + 1;
         }
 
         if (cyear < year) {
@@ -69,5 +65,11 @@ public class MyDate {
         }
         count += day;
         return count;
+    }
+
+    public static int getDaysOfMonth(int month, int year) {
+        if (month != 2)
+            return days[month-1];
+        return checkLeapYear(year) ? 29 : 28;
     }
 }

@@ -1,8 +1,13 @@
 package com.example.myrunningapp.metab.challengestab;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.example.myrunningapp.utils.MyDate;
 
-public class Challenge {
+import java.io.Serializable;
+
+public class Challenge implements Serializable {
     static int RUNNING_STEP_CHALLENGE = 1, RUNNING_DISTANCE_CHALLENGE = 2;
 
     public int challengeType;
@@ -22,4 +27,5 @@ public class Challenge {
         this.total = total;
         this.endDate = endDate;
     }
+
 }
