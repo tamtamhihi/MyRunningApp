@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.myrunningapp.hometab.HomeBottomTabFragment;
 import com.example.myrunningapp.metab.MeBottomTabFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -20,11 +21,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // TODO: 3 tabs: HOME TAB (display all activities), RECORD TAB (record), ME TAB (profile)
-        final ProgressTabFragment progressFragment = new ProgressTabFragment();
+        final HomeBottomTabFragment homeFragment = new HomeBottomTabFragment();
         final ProgressTabFragment activityFragment = new ProgressTabFragment();
         final MeBottomTabFragment meFragment = new MeBottomTabFragment();
 
-        setCurrentFragment(progressFragment);
+        setCurrentFragment(homeFragment);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
 
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.home:
-                        setCurrentFragment(progressFragment);
+                        setCurrentFragment(homeFragment);
                         break;
                     case R.id.record:
                         setCurrentFragment(activityFragment);

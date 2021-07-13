@@ -20,7 +20,6 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 
 import com.example.myrunningapp.R;
-import com.example.myrunningapp.hometab.RunningActivityAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ProfileTabFragment extends Fragment {
@@ -52,9 +51,6 @@ public class ProfileTabFragment extends Fragment {
         RecyclerView recyclerView = getView().findViewById(R.id.activities);
         double[] distance = {3.75, 4.00, 1.91, 2.08, 3.00};
         int[] time = {1705, 1925, 934, 996, 1426};
-        RunningActivityAdapter adapter = new RunningActivityAdapter(distance, time, getContext());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     private void renderButtons() {

@@ -22,25 +22,30 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
         <TextView
+            android:id="@+id/nameID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Tam Nguyen"
             android:layout_marginTop= "25dp"
             android:textAppearance="@style/BlackText"/>
         <TextView
+            android:id="@+id/location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Yesterday at 4:10 PM . Nguyen Cu Trinh Ward, District 1"
             android:textAppearance="@style/TimeAddress"/>
         </LinearLayout>
     </LinearLayout>
+
     <TextView
+        android:id="@+id/titleID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Afternoon Run"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
-        android:textAppearance="@style/Title"/>
+        android:text="Afternoon Run"
+        android:textAppearance="@style/Title" />
+
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

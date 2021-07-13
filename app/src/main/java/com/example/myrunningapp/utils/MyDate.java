@@ -2,7 +2,9 @@ package com.example.myrunningapp.utils;
 
 import android.os.Build;
 import android.util.Log;
+import android.view.ViewDebug;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import java.io.Console;
@@ -12,6 +14,14 @@ import java.time.LocalDate;
 public class MyDate implements Serializable {
     public int day, month, year;
     static int[] days = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    static String[] mMonth = { " ", "January", "February", "March", "April", "May",
+            "June", "July", "August", "September", "October", "November", "December"
+    };
+    @NonNull
+    @Override
+    public String toString() {
+        return mMonth[month] + " " + Integer.toString(day) + " " + Integer.toString(year);
+    }
 
     public MyDate(int day, int month, int year) {
         this.day = day;
