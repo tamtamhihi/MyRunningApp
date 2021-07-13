@@ -12,6 +12,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.example.myrunningapp.ProgressTabFragment;
 import com.example.myrunningapp.metab.challengestab.ChallengesTabFragment;
 import com.example.myrunningapp.metab.profiletab.ProfileTabFragment;
+import com.example.myrunningapp.metab.statisticstab.StatisticsTabFragment;
 
 public class MyPagerAdapter extends FragmentStateAdapter {
     public MyPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
@@ -26,7 +27,7 @@ public class MyPagerAdapter extends FragmentStateAdapter {
         switch (position) {
             // TODO: Case 0 is STATISTIC TAB (personal record,etc.)
             case 0:
-                return new ProgressTabFragment();
+                return new StatisticsTabFragment();
             case 1:
                 return new ChallengesTabFragment();
             case 2:

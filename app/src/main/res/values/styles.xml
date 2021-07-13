@@ -69,4 +69,29 @@
     <style name="Tab" parent="Toolbar">
         <item name="android:textSize">14sp</item>
     </style>
+
+    <style name="header">
+        <item name="android:padding">7dp</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+    <style name="cell_properties">
+        <item name="android:padding">10dp</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="cell_real_name">
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="fontFamily">@font/text</item>
+
+
+    </style>
+    <style name="cell_real_index">
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:padding">5dp</item>
+        <item name="fontFamily">@font/bold</item>
+        <item name="android:textSize">25sp</item>
+
+    </style>
 </resources>
