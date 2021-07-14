@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myrunningapp.R;
+import com.example.myrunningapp.data.UserPreference;
 import com.example.myrunningapp.utils.MyDate;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class RunningActivityAdapter extends RecyclerView.Adapter<RunningActivity
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         RunningActivity currentActivity = myActivity.get(position);
-        holder.name.setText(currentActivity.name);
+        holder.name.setText(new UserPreference(context).getUserName());
         holder.distance.setText(Double.toString(currentActivity.distance) + " km");
         int second = (int) currentActivity.time % 60;
         int minute = (int) currentActivity.time / 60;
@@ -43,7 +44,10 @@ public class RunningActivityAdapter extends RecyclerView.Adapter<RunningActivity
         double pacer = currentActivity.time / currentActivity.distance;
         int paceMinute = (int) pacer / 60;
         int paceSecond = (int) pacer % 60;
-        holder.pace.setText(Integer.toString(paceMinute) +":" + Integer.toString(paceSecond) + "/km");
+        if (paceMinute > 100)
+            holder.pace.setText("00:00/km");
+        else
+            holder.pace.setText(Integer.toString(paceMinute) +":" + Integer.toString(paceSecond) + "/km");
         holder.title.setText(currentActivity.title);
         holder.locationAndTime.setText(currentActivity.startDate.toString() + ", " + currentActivity.location);
     }

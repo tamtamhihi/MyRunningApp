@@ -11,6 +11,7 @@ public class UserPreference {
         userPreference = context.getSharedPreferences(packageName, Context.MODE_PRIVATE);
     }
 
+
     public boolean haveUserRegistered() {
         return userPreference.contains("name");
     }

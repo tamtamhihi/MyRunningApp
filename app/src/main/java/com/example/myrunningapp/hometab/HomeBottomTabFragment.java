@@ -21,20 +21,8 @@ import java.util.ArrayList;
 public class HomeBottomTabFragment extends Fragment {
     ArrayList<RunningActivity> myRunning;
 
-    public HomeBottomTabFragment() {
-        myRunning = new ArrayList<>();
-        myRunning.add(new RunningActivity(
-                4.6, 1834, "Dien Tran",
-                "Ia Sao Running", "Ia Sao, Gia Lai", new MyDate(10, 7, 2021)
-        ));
-        myRunning.add(new RunningActivity(
-                5.6, 1902, "Tam Nguyen",
-                "Saigon Running", "Nguyen Tri Phuong", new MyDate(11, 7, 2021)
-        ));
-        myRunning.add(new RunningActivity(
-                5.7, 1910, "Dien Tran",
-                "Ia Sao Running", "Ia Sao, Gia Lai", new MyDate(10, 7, 2021)
-        ));
+    public HomeBottomTabFragment(ArrayList<RunningActivity> activities) {
+        myRunning = activities;
     }
 
     @Override

@@ -8,21 +8,28 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.myrunningapp.data.InternalStorage;
+import com.example.myrunningapp.data.UserPreference;
 import com.example.myrunningapp.hometab.HomeBottomTabFragment;
+import com.example.myrunningapp.hometab.RunningActivity;
 import com.example.myrunningapp.metab.MeBottomTabFragment;
 import com.example.myrunningapp.recordtab.RunningMapsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
 
+public class MainActivity extends AppCompatActivity {
+    private ArrayList<RunningActivity> myActivities;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        myActivities = InternalStorage.myActivities;
+
         // TODO: 3 tabs: HOME TAB (display all activities), RECORD TAB (record), ME TAB (profile)
-        final HomeBottomTabFragment homeFragment = new HomeBottomTabFragment();
+        final HomeBottomTabFragment homeFragment = new HomeBottomTabFragment(myActivities);
         final RunningMapsFragment recordFragment = new RunningMapsFragment();
         final MeBottomTabFragment meFragment = new MeBottomTabFragment();
 
