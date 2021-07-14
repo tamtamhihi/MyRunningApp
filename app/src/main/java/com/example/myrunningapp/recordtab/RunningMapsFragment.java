@@ -107,6 +107,7 @@ public class RunningMapsFragment extends Fragment
         }
         enableMyLocation();
 
+
         final FloatingActionButton startStopBtn = (FloatingActionButton) view.findViewById(R.id.startrecord);
         final GridLayout gridLayoutRecord = (GridLayout) view.findViewById(R.id.infor);
         final TextView timeIndex = (TextView) view.findViewById(R.id.index_time);
@@ -286,14 +287,7 @@ public class RunningMapsFragment extends Fragment
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
-
-
-
-        if (ActivityCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        showLocation();
+        enableMyLocation();
     }
 
     private void showLocation() {
@@ -319,6 +313,7 @@ public class RunningMapsFragment extends Fragment
                 == PackageManager.PERMISSION_GRANTED) {
             if (mMap != null) {
                 mMap.setMyLocationEnabled(true);
+                showLocation();
             }
         } else {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}
@@ -339,9 +334,6 @@ public class RunningMapsFragment extends Fragment
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
-            return;
-        }
         if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             if (mMap != null) {
                 mMap.setMyLocationEnabled(true);
