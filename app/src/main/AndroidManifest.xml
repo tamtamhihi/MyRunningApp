@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myrunningapp">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the "MyLocation" functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
     <application
@@ -19,19 +17,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".hometab.DetailedRunActivity"></activity>
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity">
             <intent-filter>
-                <action android:name="android.intent.action.GET_CONTENT"/>
-                <data android:mimeType="image/*"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.OPENABLE"/>
+                <action android:name="android.intent.action.GET_CONTENT" />
+
+                <data android:mimeType="image/*" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.OPENABLE" />
             </intent-filter>
         </activity>
         <!--
@@ -51,7 +52,6 @@
             android:parentActivityName=".MainActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
-
                 <action android:name="android.intent.action.SET_ALARM" />
                 <action android:name="android.intent.action.SEND" />
 

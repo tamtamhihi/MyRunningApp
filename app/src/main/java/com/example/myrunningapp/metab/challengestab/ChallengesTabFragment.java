@@ -69,7 +69,7 @@ public class ChallengesTabFragment extends Fragment {
         challengesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         challengesRecyclerView.setAdapter(adapter);
         warning = view.findViewById(R.id.warning);
-        if (activities.size() == 0)
+        if (myChallenges.size() == 0)
             warning.setVisibility(View.VISIBLE);
         else
             warning.setVisibility(View.GONE);
@@ -94,6 +94,15 @@ public class ChallengesTabFragment extends Fragment {
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (myChallenges.size() == 0)
+            warning.setVisibility(View.VISIBLE);
+        else
+            warning.setVisibility(View.GONE);
     }
 
     @Override

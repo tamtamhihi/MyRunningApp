@@ -105,6 +105,7 @@ public class RunningMapsFragment extends Fragment
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
+        enableMyLocation();
 
         final FloatingActionButton startStopBtn = (FloatingActionButton) view.findViewById(R.id.startrecord);
         final GridLayout gridLayoutRecord = (GridLayout) view.findViewById(R.id.infor);
@@ -286,7 +287,7 @@ public class RunningMapsFragment extends Fragment
         mMap.setOnMyLocationClickListener(this);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
-        enableMyLocation();
+
 
         if (ActivityCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -296,10 +297,6 @@ public class RunningMapsFragment extends Fragment
     }
 
     private void showLocation() {
-        if (ActivityCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
         fusedLocationProviderClient.getLastLocation()
                 .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
                     @Override
@@ -346,7 +343,9 @@ public class RunningMapsFragment extends Fragment
             return;
         }
         if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            enableMyLocation();
+            if (mMap != null) {
+                mMap.setMyLocationEnabled(true);
+            }
             showLocation();
         } else {
             permissionDenied = true;

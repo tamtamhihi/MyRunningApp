@@ -100,7 +100,7 @@
         android:layout_height="250dp"
         android:scaleType="centerCrop"
         android:layout_marginTop="15dp"
-        android:src="@drawable/p1"
+        android:src="@drawable/distance_challenge"
         android:id="@+id/p1ID"/>
 
     <LinearLayout

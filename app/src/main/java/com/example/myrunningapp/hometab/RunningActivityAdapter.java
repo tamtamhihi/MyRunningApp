@@ -1,6 +1,7 @@
 package com.example.myrunningapp.hometab;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,6 +77,7 @@ public class RunningActivityAdapter extends RecyclerView.Adapter<RunningActivity
             dateString = currentActivity.startDate.toString() + ", ";
         }
         holder.locationAndTime.setText(dateString + currentActivity.location);
+
     }
 
     @Override
@@ -83,7 +85,7 @@ public class RunningActivityAdapter extends RecyclerView.Adapter<RunningActivity
         return myActivity.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public CircleImageView avatar;
         public TextView name, locationAndTime, title, distance, pace, time;
 
@@ -97,6 +99,14 @@ public class RunningActivityAdapter extends RecyclerView.Adapter<RunningActivity
             distance = itemView.findViewById(R.id.distanceID);
             pace = itemView.findViewById(R.id.paceID);
             time = itemView.findViewById(R.id.timeID);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(context, DetailedRunActivity.class);
+            intent.putExtra("index", getAdapterPosition());
+            context.startActivity(intent);
         }
     }
 }
