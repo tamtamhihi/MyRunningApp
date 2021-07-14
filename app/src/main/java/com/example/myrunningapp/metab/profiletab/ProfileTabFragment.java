@@ -8,8 +8,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.AlarmClock;
 import android.view.LayoutInflater;
@@ -17,13 +15,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.myrunningapp.R;
+import com.example.myrunningapp.data.UserPreference;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ProfileTabFragment extends Fragment {
 
+    private TextView height, weight, name;
+    private ImageView editHeight, editWeight;
     public ProfileTabFragment() {
 
     }
@@ -43,14 +46,41 @@ public class ProfileTabFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        getUserProfile(view);
+        editButtons(view);
         renderButtons();
-        renderRecyclerView();
     }
 
-    private void renderRecyclerView() {
-        RecyclerView recyclerView = getView().findViewById(R.id.activities);
-        double[] distance = {3.75, 4.00, 1.91, 2.08, 3.00};
-        int[] time = {1705, 1925, 934, 996, 1426};
+
+    private void getUserProfile(View view) {
+        name = view.findViewById(R.id.name);
+        height = view.findViewById(R.id.height);
+        weight = view.findViewById(R.id.weight);
+        UserPreference userPreference = new UserPreference(getContext());
+        String userName = userPreference.getUserName();
+        int userHeight = userPreference.getUserHeight();
+        int userWeight = userPreference.getUserWeight();
+        name.setText(userName);
+        height.setText(userHeight + " cm");
+        weight.setText(userWeight + " kg");
+    }
+
+
+    private void editButtons(View view) {
+        editHeight = view.findViewById(R.id.edit_height);
+        editWeight = view.findViewById(R.id.edit_weight);
+        editHeight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        editWeight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     private void renderButtons() {

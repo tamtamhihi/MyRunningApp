@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,8 +21,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myrunningapp.R;
+import com.example.myrunningapp.data.InternalStorage;
 import com.example.myrunningapp.utils.MyDate;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -32,20 +35,6 @@ public class ChallengesTabFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public ChallengesTabFragment() {
-        myChallenges = new ArrayList<>();
-        // Required empty public constructor
-        myChallenges.add(new Challenge(
-                "Quarantine Walk",
-                Challenge.RUNNING_STEP_CHALLENGE,
-                50000,12341,
-                new MyDate(24,7,2021)
-        ));
-        myChallenges.add(new Challenge(
-                "Quarantine Run",
-                Challenge.RUNNING_DISTANCE_CHALLENGE,
-                100, 12.5,
-                new MyDate(24,7,2021)
-        ));
     }
 
     @Override
@@ -64,6 +53,14 @@ public class ChallengesTabFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        try {
+            Log.d("ALLLLLL", "OK");
+            myChallenges = new InternalStorage(getContext()).getAllChallenges();
+        } catch (IOException e) {
+            Log.d("ALLLLLLLLLLLLLL", "Failed");
+            e.printStackTrace();
+            myChallenges = new ArrayList<>();
+        }
         RecyclerView challengesRecyclerView = view.findViewById(R.id.challenges_recyclerview);
         adapter = new ChallengesAdapter(myChallenges, getContext());
         challengesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".RegisterActivity">
+
+    <TextView
+        style="@style/Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Welcome to My Running!" />
+
+    <TextView
+        style="@style/OrangeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Please provide us with your information to continue." />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="8dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/avatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@color/colorAccent" />
+
+        <ImageButton
+            android:id="@+id/new_ava_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/new_icon"
+            android:tint="@color/colorPrimary"
+            android:src="@drawable/new_icon"
+            android:layout_alignEnd="@id/avatar"
+            android:layout_alignBottom="@id/avatar"/>
+
+    </RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kindly add a photo of yourself, just for motivation!"
+        style="@style/NormalText"
+        android:layout_marginBottom="40dp"/>
+
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/name"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="Name"
+        style="@style/NormalText"
+        android:textSize="20dp"/>
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/height"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="Height (cm)"
+        style="@style/NormalText"
+        android:textSize="20dp"/>
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/weight"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="Weight (kg)"
+        style="@style/NormalText"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="The information is used to evaluate your workout!"
+        style="@style/NormalText"
+        android:layout_marginTop="20dp"/>
+    <Button
+        android:id="@+id/continue_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Continue"
+        android:layout_marginTop="20dp"
+        android:shadowRadius="10.0"/>
+
+</LinearLayout>

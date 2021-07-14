@@ -21,9 +21,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myrunningapp.R;
+import com.example.myrunningapp.data.InternalStorage;
 import com.example.myrunningapp.utils.MyDate;
 import com.google.android.material.slider.RangeSlider;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class NewChallengeActivity extends AppCompatActivity {
@@ -251,10 +253,17 @@ public class NewChallengeActivity extends AppCompatActivity {
                         Integer.parseInt(targetValue.getText().toString()),
                         date
                 );
-                Intent intent = new Intent();
-                intent.putExtra("NEW_CHALLENGE", challenge);
-                setResult(RESULT_OK, intent);
-                onBackPressed();
+                try {
+                    new InternalStorage(getApplicationContext()).writeChallenge(challenge);
+                    Intent intent = new Intent();
+                    intent.putExtra("NEW_CHALLENGE", challenge);
+                    setResult(RESULT_OK, intent);
+                    onBackPressed();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(NewChallengeActivity.this, "Error occured. Cannot create new challenge.", Toast.LENGTH_LONG).show();
+                    onBackPressed();
+                }
             }
         });
     }
