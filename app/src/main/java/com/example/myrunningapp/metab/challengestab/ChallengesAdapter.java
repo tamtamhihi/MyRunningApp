@@ -14,16 +14,19 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myrunningapp.R;
+import com.example.myrunningapp.hometab.RunningActivity;
 
 import java.util.ArrayList;
 
 public class ChallengesAdapter extends RecyclerView.Adapter<ChallengesAdapter.ViewHolder> {
     ArrayList<Challenge> myChallenges;
+    ArrayList<RunningActivity> activities;
     Context context;
 
-    ChallengesAdapter(ArrayList<Challenge> challenges, Context context) {
+    ChallengesAdapter(ArrayList<Challenge> challenges, Context context, ArrayList<RunningActivity> activities) {
         this.myChallenges = challenges;
         this.context = context;
+        this.activities = activities;
     }
 
     @NonNull
@@ -50,10 +53,36 @@ public class ChallengesAdapter extends RecyclerView.Adapter<ChallengesAdapter.Vi
             distance = Integer.toString((int)currentChallenge.completed) + " / " + Integer.toString(currentChallenge.total) + " steps";
         }
         holder.distance.setText(distance);
-        Double percentage = currentChallenge.completed * 100 / currentChallenge.total;
+
+        double completed = 0;
+
+        for (RunningActivity runningActivity : activities) {
+            int activityDay = runningActivity.startDate.daysLeftFromNow();
+            int currentStartDay = currentChallenge.startDate.daysLeftFromNow();
+            int currentEndDay = currentChallenge.endDate.daysLeftFromNow();
+            if (currentEndDay <= activityDay && activityDay <= currentStartDay) {
+                completed += runningActivity.distance;
+            }
+        }
+
+        if (currentChallenge.challengeType == Challenge.RUNNING_STEP_CHALLENGE)
+            completed = Math.floor(completed * 10 / 8);
+
+        Double percentage = Math.min(100, completed * 100 / currentChallenge.total);
         holder.completenessBar.setProgress((int) Math.ceil(percentage));
         String percentageString = String.format("%.1f", percentage) + " %";
         holder.percentage.setText(percentageString);
+
+        int startDiff = currentChallenge.startDate.daysLeftFromNow() - 1;
+
+        if (startDiff == 0) {
+            holder.startDate.setText("Starts today");
+        } else if (startDiff == 1){
+            holder.startDate.setText("Started yesterday");
+        } else {
+            holder.startDate.setText("Started " + startDiff + " days ago");
+        }
+
         int deadlineDiff = currentChallenge.endDate.daysLeftFromNow();
 
         if (deadlineDiff < 0) {
@@ -74,7 +103,7 @@ public class ChallengesAdapter extends RecyclerView.Adapter<ChallengesAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView challengeImage;
-        public TextView challengeTitle, challengeType, distance, percentage, deadline;
+        public TextView challengeTitle, challengeType, distance, percentage, startDate, deadline;
         public ProgressBar completenessBar;
 
         public ViewHolder(@NonNull View itemView) {
@@ -84,6 +113,7 @@ public class ChallengesAdapter extends RecyclerView.Adapter<ChallengesAdapter.Vi
             challengeType = itemView.findViewById(R.id.challenge_type);
             distance = itemView.findViewById(R.id.distance);
             percentage = itemView.findViewById(R.id.percentage);
+            startDate = itemView.findViewById(R.id.startdate);
             deadline = itemView.findViewById(R.id.deadline);
             completenessBar = itemView.findViewById(R.id.completeness_bar);
         }

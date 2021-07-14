@@ -2,6 +2,7 @@ package com.example.myrunningapp.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 
 public class UserPreference {
     private static SharedPreferences userPreference;
@@ -28,6 +29,10 @@ public class UserPreference {
         return userPreference.getInt("weight", 60);
     }
 
+    public String getAvatarUri() {
+        return userPreference.getString("avatar", "none");
+    }
+
     public void setUserName(String name) {
         userPreference.edit().putString("name", name).apply();
     }
@@ -38,6 +43,10 @@ public class UserPreference {
 
     public void setWeight(int weight) {
         userPreference.edit().putInt("weight", weight).apply();
+    }
+
+    public void setAvatarUri(Uri uri) {
+        userPreference.edit().putString("avatar", uri.getPath()).apply();
     }
 
 }

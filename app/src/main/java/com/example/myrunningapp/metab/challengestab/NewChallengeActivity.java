@@ -247,10 +247,12 @@ public class NewChallengeActivity extends AppCompatActivity {
 
                 if (title.isEmpty())
                     title = currentChallenge == Challenge.RUNNING_DISTANCE_CHALLENGE ? "My running distance challenge" : "My running steps challenge";
+                LocalDate today = LocalDate.now();
                 Challenge challenge = new Challenge(
                         title,
                         currentChallenge,
                         Integer.parseInt(targetValue.getText().toString()),
+                        new MyDate(today.getDayOfMonth(), today.getMonthValue(), today.getYear()),
                         date
                 );
                 try {

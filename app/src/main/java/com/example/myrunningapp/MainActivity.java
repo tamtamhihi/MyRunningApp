@@ -13,6 +13,7 @@ import com.example.myrunningapp.data.UserPreference;
 import com.example.myrunningapp.hometab.HomeBottomTabFragment;
 import com.example.myrunningapp.hometab.RunningActivity;
 import com.example.myrunningapp.metab.MeBottomTabFragment;
+import com.example.myrunningapp.metab.challengestab.Challenge;
 import com.example.myrunningapp.recordtab.RunningMapsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -21,17 +22,19 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private ArrayList<RunningActivity> myActivities;
 
+    private ArrayList<Challenge> myChallenges;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         myActivities = InternalStorage.myActivities;
+        myChallenges = InternalStorage.allChallenges;
 
         // TODO: 3 tabs: HOME TAB (display all activities), RECORD TAB (record), ME TAB (profile)
         final HomeBottomTabFragment homeFragment = new HomeBottomTabFragment(myActivities);
-        final RunningMapsFragment recordFragment = new RunningMapsFragment();
-        final MeBottomTabFragment meFragment = new MeBottomTabFragment();
+        final RunningMapsFragment recordFragment = new RunningMapsFragment(myChallenges);
+        final MeBottomTabFragment meFragment = new MeBottomTabFragment(myActivities);
 
         setCurrentFragment(homeFragment);
 

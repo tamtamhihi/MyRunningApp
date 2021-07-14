@@ -66,6 +66,13 @@ public class RunningMapsFragment extends Fragment
     private TimerTask timerTask, distanceTimeTask;
     private int second = 0;
 
+    private ArrayList<Challenge> myChallenges;
+
+    public RunningMapsFragment(ArrayList<Challenge> myChallenges) {
+        this.myChallenges = myChallenges;
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -160,7 +167,7 @@ public class RunningMapsFragment extends Fragment
                                                         else
                                                             paceIndex.setText(Integer.toString(mi) + ":" + Integer.toString(se) + " /km");
 
-                                                        int steps = (int) mDistance[0] / 8;
+                                                        int steps = (int) mDistance[0] * 10 / 8;
                                                         stepIndex.setText(Integer.toString(steps));
 
                                                         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(current, 18, 0, 0)));

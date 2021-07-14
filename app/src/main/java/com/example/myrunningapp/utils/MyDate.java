@@ -82,4 +82,20 @@ public class MyDate implements Serializable {
             return days[month-1];
         return checkLeapYear(year) ? 29 : 28;
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public boolean inCurrentWeek() {
+        int today = LocalDate.now().getDayOfWeek().getValue();
+        int offset = daysLeftFromNow();
+        if (offset < 0 || offset > today - 2) {
+            return false;
+        }
+        return true;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public boolean inCurrentYear() {
+        return this.year == LocalDate.now().getYear();
+    }
+
 }

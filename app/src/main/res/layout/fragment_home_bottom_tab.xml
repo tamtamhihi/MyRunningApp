@@ -15,9 +15,30 @@
         android:background="@color/colorPrimary"
         app:titleTextAppearance="@style/Toolbar"/>
 
-    <androidx.recyclerview.widget.RecyclerView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/home_recycleView"/>
+        android:layout_height="fill_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/home_recycleView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            style="@style/Title"
+            android:id="@+id/warning"
+            android:visibility="gone"
+            android:text="You don't have any activities yet!\nLet's start recording!"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </LinearLayout>

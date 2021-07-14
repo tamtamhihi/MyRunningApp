@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.myrunningapp.R;
 import com.example.myrunningapp.utils.MyDate;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 
 public class HomeBottomTabFragment extends Fragment {
     ArrayList<RunningActivity> myRunning;
-
+    TextView warning;
     public HomeBottomTabFragment(ArrayList<RunningActivity> activities) {
         myRunning = activities;
     }
@@ -32,6 +33,11 @@ public class HomeBottomTabFragment extends Fragment {
         RunningActivityAdapter adapter = new RunningActivityAdapter(myRunning, getContext());
         runningRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
         runningRecycleView.setAdapter(adapter);
+        warning = view.findViewById(R.id.warning);
+        if (myRunning.size() == 0)
+            warning.setVisibility(View.VISIBLE);
+        else
+            warning.setVisibility(View.GONE);
     }
 
     @Override

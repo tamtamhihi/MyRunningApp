@@ -1,6 +1,8 @@
 package com.example.myrunningapp.data;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.example.myrunningapp.hometab.RunningActivity;
@@ -10,6 +12,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,16 +20,18 @@ import java.util.Scanner;
 
 public class InternalStorage {
     private String fileDir;
-    private static File file, challengeFile, activitiesFile;
+    private static File file, challengeFile, activitiesFile, avatarFile;
     private static FileWriter challengeFileWriter, activitiesFileWriter;
     public static ArrayList<RunningActivity> myActivities;
     public static ArrayList<Challenge> allChallenges;
+    public static Bitmap avatar;
 
     public InternalStorage(Context context) throws IOException {
         file = context.getFilesDir();
         fileDir = file.getAbsolutePath();
         challengeFile = new File(file, "challenge");
         activitiesFile = new File(file, "activity");
+        avatarFile = new File(file, "avatar");
         if (challengeFile.exists()) {
             challengeFileWriter = new FileWriter(fileDir + "/challenge", true);
         } else {
@@ -39,6 +44,17 @@ public class InternalStorage {
         }
         myActivities = getAllActivities();
         allChallenges = getAllChallenges();
+        if (avatarFile.exists())
+            avatar = BitmapFactory.decodeFile(avatarFile.getAbsolutePath());
+
+    }
+
+    public static void addAvatar(Bitmap avatar) throws IOException {
+        InternalStorage.avatar = avatar;
+        FileOutputStream stream = new FileOutputStream(avatarFile);
+        avatar.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        stream.flush();
+        stream.close();
     }
 
     public void writeChallenge(Challenge challenge) throws IOException {
@@ -47,6 +63,9 @@ public class InternalStorage {
                         + challenge.challengeName + " "
                         + Double.toString(challenge.completed) + " "
                         + Integer.toString(challenge.total) + " "
+                        + Integer.toString(challenge.startDate.day) + " "
+                        + Integer.toString(challenge.startDate.month) + " "
+                        + Integer.toString(challenge.startDate.year) + " "
                         + Integer.toString(challenge.endDate.day) + " "
                         + Integer.toString(challenge.endDate.month) + " "
                         + Integer.toString(challenge.endDate.year) + "\n";
@@ -108,15 +127,15 @@ public class InternalStorage {
 
         Scanner sc = new Scanner(challengeFile);
 
-        Log.d("get_all", "before");
         while (sc.hasNext()) {
             int type = sc.nextInt();
             String title = sc.next();
             double completed = sc.nextDouble();
             int total = sc.nextInt();
             int day = sc.nextInt(), month = sc.nextInt(), year = sc.nextInt();
-            Log.d("hello", "helooooooo");
-            challenges.add(0, new Challenge(title, type, total, completed, new MyDate(day, month, year)));
+            int eday = sc.nextInt(), emonth = sc.nextInt(), eyear = sc.nextInt();
+            challenges.add(0, new Challenge(title, type, total, completed,
+                    new MyDate(day, month, year), new MyDate(eday, emonth, eyear)));
         }
 
         return challenges;
@@ -125,7 +144,6 @@ public class InternalStorage {
     @Override
     protected void finalize() throws Throwable {
         super.finalize();
-        Log.d("Hello", "Goodbye");
         challengeFileWriter.close();
         activitiesFileWriter.close();
     }

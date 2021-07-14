@@ -1,16 +1,25 @@
 package com.example.myrunningapp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.myrunningapp.data.InternalStorage;
 import com.example.myrunningapp.data.UserPreference;
+
+import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -43,9 +52,30 @@ public class RegisterActivity extends AppCompatActivity {
         newAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: add image
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(intent, 1);
+                }
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            Uri avatarUri = data.getData();
+            new UserPreference(this).setAvatarUri(avatarUri);
+            try {
+                Bitmap avatarBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), avatarUri);
+                avatar.setImageBitmap(avatarBitmap);
+                InternalStorage.addAvatar(avatarBitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
     private void setupContinueButton() {

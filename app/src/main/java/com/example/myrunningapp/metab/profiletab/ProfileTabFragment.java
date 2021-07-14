@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.provider.AlarmClock;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +22,21 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.myrunningapp.R;
+import com.example.myrunningapp.data.InternalStorage;
 import com.example.myrunningapp.data.UserPreference;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.io.IOException;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileTabFragment extends Fragment {
 
     private TextView height, weight, name;
+    private CircleImageView avatar;
     private ImageView editHeight, editWeight;
+
+
     public ProfileTabFragment() {
 
     }
@@ -46,23 +56,30 @@ public class ProfileTabFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getUserProfile(view);
+        try {
+            getUserProfile(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         editButtons(view);
         renderButtons();
     }
 
 
-    private void getUserProfile(View view) {
+    private void getUserProfile(View view) throws IOException {
         name = view.findViewById(R.id.name);
         height = view.findViewById(R.id.height);
         weight = view.findViewById(R.id.weight);
+        avatar = view.findViewById(R.id.avatar);
         UserPreference userPreference = new UserPreference(getContext());
         String userName = userPreference.getUserName();
         int userHeight = userPreference.getUserHeight();
         int userWeight = userPreference.getUserWeight();
+        Uri uri = Uri.parse(userPreference.getAvatarUri());
         name.setText(userName);
         height.setText(userHeight + " cm");
         weight.setText(userWeight + " kg");
+        avatar.setImageBitmap(InternalStorage.avatar);
     }
 
 

@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myrunningapp.R;
 import com.example.myrunningapp.data.InternalStorage;
+import com.example.myrunningapp.hometab.RunningActivity;
 import com.example.myrunningapp.utils.MyDate;
 
 import java.io.IOException;
@@ -31,10 +33,13 @@ import java.util.ArrayList;
 public class ChallengesTabFragment extends Fragment {
 
     ArrayList<Challenge> myChallenges;
+    ArrayList<RunningActivity> activities;
     ChallengesAdapter adapter;
+    TextView warning;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public ChallengesTabFragment() {
+    public ChallengesTabFragment(ArrayList<RunningActivity> activities) {
+        this.activities = activities;
     }
 
     @Override
@@ -54,17 +59,20 @@ public class ChallengesTabFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         try {
-            Log.d("ALLLLLL", "OK");
             myChallenges = new InternalStorage(getContext()).getAllChallenges();
         } catch (IOException e) {
-            Log.d("ALLLLLLLLLLLLLL", "Failed");
             e.printStackTrace();
             myChallenges = new ArrayList<>();
         }
         RecyclerView challengesRecyclerView = view.findViewById(R.id.challenges_recyclerview);
-        adapter = new ChallengesAdapter(myChallenges, getContext());
+        adapter = new ChallengesAdapter(myChallenges, getContext(), activities);
         challengesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         challengesRecyclerView.setAdapter(adapter);
+        warning = view.findViewById(R.id.warning);
+        if (activities.size() == 0)
+            warning.setVisibility(View.VISIBLE);
+        else
+            warning.setVisibility(View.GONE);
     }
 
 

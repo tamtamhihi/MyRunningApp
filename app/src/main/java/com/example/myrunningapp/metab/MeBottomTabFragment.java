@@ -14,13 +14,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.myrunningapp.R;
+import com.example.myrunningapp.hometab.RunningActivity;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.util.ArrayList;
+
 public class MeBottomTabFragment extends Fragment {
 
-    public MeBottomTabFragment() {
+    ArrayList<RunningActivity> activities;
+
+    public MeBottomTabFragment(ArrayList<RunningActivity> activities) {
         // Required empty public constructor
+        this.activities = activities;
     }
 
 
@@ -43,7 +49,7 @@ public class MeBottomTabFragment extends Fragment {
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
 
-        MyPagerAdapter adapter = new MyPagerAdapter(getActivity());
+        MyPagerAdapter adapter = new MyPagerAdapter(getActivity(), activities);
         ViewPager2 viewPager = view.findViewById(R.id.viewpager);
         viewPager.setAdapter(adapter);
 
