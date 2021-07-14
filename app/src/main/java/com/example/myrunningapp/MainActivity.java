@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import com.example.myrunningapp.hometab.HomeBottomTabFragment;
 import com.example.myrunningapp.metab.MeBottomTabFragment;
+import com.example.myrunningapp.recordtab.RunningMapsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO: 3 tabs: HOME TAB (display all activities), RECORD TAB (record), ME TAB (profile)
         final HomeBottomTabFragment homeFragment = new HomeBottomTabFragment();
-        final ProgressTabFragment activityFragment = new ProgressTabFragment();
+        final RunningMapsFragment recordFragment = new RunningMapsFragment();
         final MeBottomTabFragment meFragment = new MeBottomTabFragment();
 
         setCurrentFragment(homeFragment);
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                         setCurrentFragment(homeFragment);
                         break;
                     case R.id.record:
-                        setCurrentFragment(activityFragment);
+                        setCurrentFragment(recordFragment);
                         break;
                     case R.id.me:
                         setCurrentFragment(meFragment);
