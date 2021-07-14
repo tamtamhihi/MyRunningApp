@@ -37,7 +37,12 @@ public class RunningActivityAdapter extends RecyclerView.Adapter<RunningActivity
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         RunningActivity currentActivity = myActivity.get(position);
         holder.name.setText(new UserPreference(context).getUserName());
-        holder.distance.setText(Double.toString(currentActivity.distance) + " km");
+
+        int km = 0;
+        if(currentActivity.distance >= 1000)
+            km = (int)currentActivity.distance/1000;
+        int meter = (int)currentActivity.distance%1000;
+        holder.distance.setText(Integer.toString(km) + "." + Integer.toString(meter));
         int second = (int) currentActivity.time % 60;
         int minute = (int) currentActivity.time / 60;
         holder.time.setText(Integer.toString(minute) + "m " + Integer.toString(second) + "s");
