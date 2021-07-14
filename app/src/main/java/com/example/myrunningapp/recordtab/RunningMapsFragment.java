@@ -10,16 +10,23 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,14 +45,23 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.Dot;
+import com.google.android.gms.maps.model.Gap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PatternItem;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -54,7 +70,7 @@ public class RunningMapsFragment extends Fragment
         GoogleMap.OnMyLocationButtonClickListener,
         GoogleMap.OnMyLocationClickListener,
         OnMapReadyCallback,
-        ActivityCompat.OnRequestPermissionsResultCallback {
+        ActivityCompat.OnRequestPermissionsResultCallback{
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private boolean permissionDenied = false;
@@ -66,12 +82,12 @@ public class RunningMapsFragment extends Fragment
     private TimerTask timerTask, distanceTimeTask;
     private int second = 0;
 
+    private String locationInfor;
     private ArrayList<Challenge> myChallenges;
 
     public RunningMapsFragment(ArrayList<Challenge> myChallenges) {
         this.myChallenges = myChallenges;
     }
-
 
     @Nullable
     @Override
@@ -96,6 +112,9 @@ public class RunningMapsFragment extends Fragment
         final TextView distanceIndex = (TextView) view.findViewById(R.id.index_distance);
         final TextView paceIndex = (TextView) view.findViewById(R.id.index_pace);
         final TextView stepIndex = (TextView) view.findViewById(R.id.index_step);
+        final Polyline[] polyline = new Polyline[1];
+        final PolylineOptions options = new PolylineOptions().clickable(true).width(7)
+                .color(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
 
         final ArrayList<LatLng> mLatLng = new ArrayList<>();
         final double[] mDistance = {0};
@@ -146,15 +165,40 @@ public class RunningMapsFragment extends Fragment
                                                     public void run() {
 
                                                         LatLng current = new LatLng(location.getLatitude(), location.getLongitude());
+
                                                         mLatLng.add(current);
                                                         int n = mLatLng.size();
                                                         float[] results = new float[3];
+                                                        if(n==1){
+                                                            Geocoder gcd = new Geocoder(getContext(), Locale.getDefault());
+                                                            List<Address> addresses = null;
+                                                            try {
+                                                                addresses = gcd.getFromLocation(location.getLatitude(),
+                                                                        location.getLongitude(), 5);
+                                                            } catch (IOException e) {
+                                                                addresses = new ArrayList<>();
+                                                                e.printStackTrace();
+                                                            }
+                                                            if (addresses.size() > 0) {
+                                                                int i;
+                                                                for(i=0; i< addresses.size();i++)
+                                                                    if(addresses.get(i).getLocality() != null)
+                                                                        break;
+                                                                locationInfor = addresses.get(i).getLocality();
+                                                            }
+                                                            else {
+                                                                locationInfor = "Earth";
+                                                            }
+                                                        }
                                                         if (n > 1) {
                                                             Location.distanceBetween(mLatLng.get(n - 1).latitude,
                                                                     mLatLng.get(n - 1).longitude, mLatLng.get(n - 2).latitude,
                                                                     mLatLng.get(n - 2).longitude, results);
                                                             mDistance[0] += results[0];
                                                         }
+
+                                                        options.add(mLatLng.get(n-1));
+                                                        polyline[0] = mMap.addPolyline(options);
 
                                                         String km = String.format("%.2f km", mDistance[0] / 1000);
                                                         distanceIndex.setText(km);
@@ -168,6 +212,7 @@ public class RunningMapsFragment extends Fragment
                                                             paceIndex.setText(Integer.toString(mi) + ":" + Integer.toString(se) + " /km");
 
                                                         int steps = (int) mDistance[0] * 10 / 8;
+
                                                         stepIndex.setText(Integer.toString(steps));
 
                                                         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(current, 18, 0, 0)));
@@ -186,23 +231,48 @@ public class RunningMapsFragment extends Fragment
                     isRunning = false;
 
                 } else {
-                    gridLayoutRecord.setVisibility(View.GONE);
-                    startStopBtn.setImageResource(R.drawable.record_icon);
-                    LocalDate today = LocalDate.now();
-                    RunningActivity newActivity = new RunningActivity(
-                            mDistance[0], second, "none", "My Running Activity",
-                            "Nguyen Cu Trinh Ward", new MyDate(today.getDayOfMonth(), today.getMonthValue(), today.getYear()),
-                            mLatLng);
-                    try {
-                        new InternalStorage(getContext()).writeActivity(newActivity);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    isRunning = true;
-                    timerTask.cancel();
-                    distanceTimeTask.cancel();
-                    getActivity().finish();
-                    startActivity(new Intent(getContext(), MainActivity.class));
+                    final String[] mText = new String[1];
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Title");
+                    final EditText input = new EditText(getActivity());
+                    input.setInputType(InputType.TYPE_TEXT_VARIATION_LONG_MESSAGE);
+                    builder.setView(input);
+
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            mText[0] = input.getText().toString();
+                            Log.d("hello", mText[0]);
+                            gridLayoutRecord.setVisibility(View.GONE);
+                            startStopBtn.setImageResource(R.drawable.record_icon);
+                            LocalDate today = LocalDate.now();
+
+                            RunningActivity newActivity = new RunningActivity(
+                                    mDistance[0], second, "none", mText[0],
+                                    locationInfor, new MyDate(today.getDayOfMonth(), today.getMonthValue(), today.getYear()),
+                                    mLatLng);
+                            try {
+                                new InternalStorage(getContext()).writeActivity(newActivity);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            isRunning = true;
+                            timerTask.cancel();
+                            distanceTimeTask.cancel();
+                            getActivity().finish();
+                            startActivity(new Intent(getContext(), MainActivity.class));
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            mText[0] = "New Activity";
+                            dialogInterface.cancel();
+                        }
+                    });
+                    builder.show();
+
+
                     //getParentFragmentManager().beginTransaction().detach(RunningMapsFragment.this).attach(RunningMapsFragment.this).commit();
                 }
             }
@@ -226,6 +296,10 @@ public class RunningMapsFragment extends Fragment
     }
 
     private void showLocation() {
+        if (ActivityCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
         fusedLocationProviderClient.getLastLocation()
                 .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
                     @Override
@@ -278,5 +352,6 @@ public class RunningMapsFragment extends Fragment
             permissionDenied = true;
         }
     }
+
 
 }
